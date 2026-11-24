@@ -1,0 +1,23 @@
+# Fast end-to-end check on synthetic data (a few minutes on a laptop).
+data: data/synthetic.npz
+out: results/smoke
+n_val_events: 200
+n_tune_events: 200
+n_test_events: 600
+n_boot: 200
+seeds: [0, 1]
+max_epochs: 3
+patience: 2
+bpr_epochs: 3
+multi_seed_models: [NECTAR, Ctx-SASRec+T+M]
+single_seed_models: [GRU4Rec+T+M, SASRec+T+M, TiSASRec-style+T+M, SASRec+T, SASRec]
+ablations: [NECTAR-noHCE, NECTAR-noBEEN, NECTAR-noTDM, NECTAR-noGMAU, Backbone+T+M]
+tuning:
+  NECTAR:
+    - {}
+    - {dropout: 0.1}
+  Ctx-SASRec+T+M:
+    - {}
+    - {negatives: 512}
+bandit_users: 200
+fidelity_users: 100

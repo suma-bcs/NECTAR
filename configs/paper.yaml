@@ -1,0 +1,31 @@
+# Full reproduction of the paper (MovieLens 25M). Expect many hours on a CPU.
+data: data/ml25m.npz
+out: results/paper
+n_val_events: 1500
+n_tune_events: 6000
+n_test_events: 20000
+n_boot: 1000
+seeds: [0, 1, 2]
+max_epochs: 25
+patience: 4
+bpr_epochs: 30
+multi_seed_models: [NECTAR, Ctx-SASRec+T+M]
+single_seed_models: [GRU4Rec+T+M, SASRec+T+M, TiSASRec-style+T+M, SASRec+T, SASRec]
+ablations: [NECTAR-noHCE, NECTAR-noBEEN, NECTAR-noTDM, NECTAR-noGMAU, Backbone+T+M]
+tuning:
+  NECTAR:
+    - {}
+    - {P: 16}
+    - {dropout: 0.1}
+    - {lr: 0.001}
+    - {negatives: 512}
+    - {eccm: 8, window: 4}
+  Ctx-SASRec+T+M:
+    - {}
+    - {negatives: 512}
+    - {dropout: 0.1}
+    - {dropout: 0.3}
+    - {lr: 0.001}
+    - {lr: 0.003}
+bandit_users: 3000
+fidelity_users: 600
